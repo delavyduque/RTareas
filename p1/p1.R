@@ -3,6 +3,7 @@ repetir <- 1000
 pasos <- 500
 datos <-  data.frame()
 datosPD <- data.frame() #datos de Pasos y Dimensiones
+datosNP <- data.frame() #datos sin Paralelismo
 
 experimento <- function(replica) {
   pos <- rep(0, dimension)
@@ -28,9 +29,11 @@ clusterExport(cluster, "pasos")
 
 for (dimension in 1:8) {
     clusterExport(cluster, "dimension")
-    M <-system.time(resultado <- parSapply(cluster, 1:repetir, experimento))[3]
+    M <-system.time(resultado <- parSapply(cluster, 1:repetir, experimento))[3] #Con Paralelismo y revisando el tiempo
+    N <-system.time(resultado <- sapply(1:repetir, experimento))[3] #Sin paralelismo
     datos <- rbind(datos, resultado)
     datosPD <- rbind(datosPD, M)
+    datosNP <- rbind(datosNP, N)
 }
 
 stopCluster(cluster)
@@ -41,5 +44,10 @@ graphics.off()
 
 png("systemTime.png")
 plot(data.matrix(datosPD),
+xlab="Dimensiones", ylab="Tiempo", main="Tiempo de ejecucion")
+graphics.off()
+
+png("notParalel.png")
+plot(data.matrix(datosNP),
 xlab="Dimensiones", ylab="Tiempo", main="Tiempo de ejecucion")
 graphics.off()
