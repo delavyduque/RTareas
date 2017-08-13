@@ -1,7 +1,8 @@
 library(parallel)
-repetir <- 100
-pasos <- 200
+repetir <- 1000
+pasos <- 500
 datos <-  data.frame()
+datosPD <- data.frame() #datos de Pasos y Dimensiones
 
 experimento <- function(replica) {
   pos <- rep(0, dimension)
@@ -14,6 +15,7 @@ experimento <- function(replica) {
         cambio <- -1
     }
     pos[cambiar] <- pos[cambiar] + cambio
+
     if (all(pos == origen)) {
       times <- times + 1
     }
@@ -26,12 +28,18 @@ clusterExport(cluster, "pasos")
 
 for (dimension in 1:8) {
     clusterExport(cluster, "dimension")
-    resultado <- parSapply(cluster, 1:repetir, experimento)
+    M <-system.time(resultado <- parSapply(cluster, 1:repetir, experimento))[3]
     datos <- rbind(datos, resultado)
+    datosPD <- rbind(datosPD, M)
 }
 
 stopCluster(cluster)
-png("p1er100y200.png")
+png("p1er.png")
 boxplot(data.matrix(datos), use.cols=FALSE,
 xlab="Dimensi\u{F3}n", ylab="Numero de veces que regresa al origen", main="Euclideana")
+graphics.off()
+
+png("systemTime.png")
+plot(data.matrix(datosPD),
+xlab="Dimensiones", ylab="Tiempo", main="Tiempo de ejecucion")
 graphics.off()
