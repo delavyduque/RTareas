@@ -29,8 +29,9 @@ clusterExport(cluster, "pasos")
 
 for (dimension in 1:8) {
     clusterExport(cluster, "dimension")
-    M <-system.time(resultado <- parSapply(cluster, 1:repetir, experimento))[3] #Con Paralelismo y revisando el tiempo
-    N <-system.time(resultado <- sapply(1:repetir, experimento))[3] #Sin paralelismo
+    resultado <- parSapply(cluster, 1:repetir, experimento)
+    M <-system.time(parSapply(cluster, 1:repetir, experimento))[3] #Con Paralelismo y revisando el tiempo
+    N <-system.time(sapply(1:repetir, experimento))[3] #Sin paralelismo
     datos <- rbind(datos, resultado)
     datosPD <- rbind(datosPD, M)
     datosNP <- rbind(datosNP, N)
