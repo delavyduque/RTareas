@@ -1,15 +1,9 @@
 library(parallel)
-dim <- 10
-num <-  dim^2
-random <- runif(num)
-probability <- 0.3
-actual <- matrix((random < probability)* 1, nrow=dim, ncol=dim)
-ciclo <- 0
-
 suppressMessages(library("sna"))
-png("p2_t0.png")
-plot.sociomatrix(actual, diaglab=FALSE, main="Inicio")
-graphics.off()
+unlink("*.png")
+dim <- 10
+num <- dim^2
+probability <- 0.1
 
 paso <- function(pos) {
     fila <- floor((pos - 1) / dim) + 1
@@ -23,18 +17,30 @@ cluster <- makeCluster(detectCores() - 1)
 clusterExport(cluster, "dim")
 clusterExport(cluster, "paso")
 
-while (sum(actual) > 0){
-  ciclo <- ciclo + 1
-  clusterExport(cluster, "actual")
-  siguiente <- parSapply(cluster, 1:num, paso)
-  actual <- matrix(siguiente, nrow=dim, ncol=dim, byrow=TRUE)
+while (probability <= 0.9) {
+  ciclo <- 0
+  random <- runif(num)
+  actual <- matrix((random < probability)* 1, nrow=dim, ncol=dim)
+  salida = paste("p2", probability, ciclo ,".png", sep="")
+  png(salida)
+  plot.sociomatrix(actual, diaglab=FALSE, main="Inicio")
+  graphics.off()
 
-  if (sum(actual) > 0){
-    salida = paste("p2_t", ciclo ,".png", sep="")
-    tiempo = paste("Paso", ciclo)
-    png(salida)
-    plot.sociomatrix(actual, diaglab=FALSE, main=tiempo)
-    graphics.off()
+  while (sum(actual) > 0 && sum(actual) < num){
+    ciclo <- ciclo + 1
+    clusterExport(cluster, "actual")
+    siguiente <- parSapply(cluster, 1:num, paso)
+    actual <- matrix(siguiente, nrow=dim, ncol=dim, byrow=TRUE)
+
+    if (sum(actual) > 0 && sum(actual) < num){
+      salida = paste("p2", probability, ciclo ,".png", sep="")
+      tiempo = paste("Generaci\u{F3}n", ciclo, "Probabilidad", probability)
+      png(salida)
+      plot.sociomatrix(actual, diaglab=FALSE, main=tiempo)
+      graphics.off()
+    }
   }
+  probability <- probability + 0.1
 }
+
 stopCluster(cluster)
