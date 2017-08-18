@@ -4,6 +4,7 @@ unlink("*.png")
 dim <- 10
 num <- dim^2
 probability <- 0.1
+df <- data.frame() #saber repeticiones
 
 paso <- function(pos) {
     fila <- floor((pos - 1) / dim) + 1
@@ -40,8 +41,17 @@ while (probability <= 0.9) {
       graphics.off()
     }
   }
+  cicloTotal <- ciclo
+  probabilidadTotal <-probability
+  df <- rbind(df, c(probabilidadTotal, cicloTotal))
   probability <- probability + 0.1
   ciclo <- 0
 }
 
 stopCluster(cluster)
+
+png("p2generacionesYprobabilidad.png")
+plot(data.matrix(df),
+xlab="Probabilidad", ylab="Generaciones", main="Generaciones generadas por probabilidad")
+axis(1,at=data.matrix(df)[,1])
+graphics.off()
