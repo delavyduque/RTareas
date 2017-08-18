@@ -23,7 +23,7 @@ while (probability <= 0.9) {
   actual <- matrix((random < probability)* 1, nrow=dim, ncol=dim)
   salida = paste("p2", probability, ciclo ,".png", sep="")
   png(salida)
-  plot.sociomatrix(actual, diaglab=FALSE, main="Inicio")
+  plot.sociomatrix(actual, diaglab=FALSE, main=paste("Inicio", probability))
   graphics.off()
 
   while (sum(actual) > 0 && sum(actual) < num){
@@ -41,6 +41,7 @@ while (probability <= 0.9) {
     }
   }
   probability <- probability + 0.1
+  ciclo <- 0
 }
 
 stopCluster(cluster)
