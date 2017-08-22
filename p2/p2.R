@@ -1,6 +1,6 @@
 library(parallel)
 suppressMessages(library("sna"))
-unlink("*.png")
+unlink("p2*.png")
 dim <- 10
 num <- dim^2
 probability <- 0.1

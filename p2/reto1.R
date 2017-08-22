@@ -1,6 +1,6 @@
 library(parallel)
 suppressMessages(library("sna"))
-unlink("*.png")
+unlink("reto1*.png")
 dim <- 50
 num <- dim^2
 semillas <- 8
@@ -40,7 +40,7 @@ while(any(actual == 0)){
   clusterExport(cluster, "actual")
   salida = paste("reto1-paso", ciclo ,".png", sep="")
   png(salida)
-  plot.sociomatrix(actual, diaglab=F, main=paste("Paso", ciclo))
+  plot.sociomatrix(actual, drawlab=F, diaglab=F,  drawlines=T, main=paste("Paso", ciclo))
   graphics.off()
   siguiente <- parSapply(cluster, 1:num, paso)
   actual <- matrix(siguiente, nrow=dim, ncol= dim, byrow= T)
@@ -49,6 +49,6 @@ while(any(actual == 0)){
 actual[1] <-0
 salida = paste("reto1-paso", ciclo ,".png", sep="")
 png(salida)
-plot.sociomatrix(actual, diaglab=F, main=paste("Paso", ciclo))
+plot.sociomatrix(actual, drawlab=F, diaglab=F,  drawlines=T, main=paste("Paso", ciclo))
 graphics.off()
 stopCluster(cluster)
