@@ -2,7 +2,7 @@ l <- 1.5
 n <- 50
 pI <- 0.05
 pr <- 0.02
-v <- l / 20
+v <- l / 30
 tmax <- 100
 suppressMessages(library(doParallel))
 
