@@ -4,10 +4,10 @@
 # Introducción
 Un sistema multiagente, como su nombre lo dice, está compuesto de diversos agentes; cada agente tiene comportamiento autónomo y dinámico e interactúa con un ambiente y otros agentes, causando un cambio en el ambiente en el que está expuesto.
 
-En esta práctica, se toma en cuenta el sistema multiagente para simular el progreso de un agente infectado al interactuar con agentes susceptible a infectarse, con la probabilidad de recuperarse y no volver a contrar la enfermedad, sin olvidar realizar esta simulación en paralelo, para hacer más eficiente dicha simulación .Basándonos en el modelo _SIR_, que es un modelo muy elemental para explicar la evolución de alguna enfermedad infecciosa, creada por algún virus o bacteria. En este caso, se dividen a los agentes en:
-* __S__: Representa a los agentes susceptibles, los que tienen riesgo de contraer la enfermedad.
-* __I__: Representa a los agentes infectados, aquellos que contrajeron la enfermedad y pueden contagiar a los susceptibles.
-* __R__: Representa a los agentes recuperados, que se recuperaron de la enfermedad y son inmunes a ella (en este caso).
+En esta práctica, se toma en cuenta el sistema multiagente para simular el progreso de un agente infectado al interactuar con agentes susceptible a infectarse, con la probabilidad de recuperarse y no volver a contrar la enfermedad, sin olvidar realizar esta simulación en paralelo, para hacer más eficiente dicha simulación basándonos en el modelo _SIR_, que es un modelo muy elemental para explicar la evolución de alguna enfermedad infecciosa, creada por algún virus o bacteria. En este caso, se dividen a los agentes en:
+* __S__: Agentes susceptibles, los que tienen riesgo de contraer la enfermedad.
+* __I__: Agentes infectados, aquellos que contrajeron la enfermedad y pueden contagiar a los susceptibles.
+* __R__: Agentes recuperados, que se recuperaron de la enfermedad y son inmunes a ella (en este caso).
 
 # Objetivos:
 * Paralelizar la simulación para mejorar la eficiencia.
@@ -35,7 +35,8 @@ Al momento de paralelizar la simulación, hubo un cambio significativo en el ren
 Se cambió la velocidad para ver si tenía un efecto en los agentes, si tardarían en infectarse , y en 100 repeticiones, con la velocidad de 1/10, y la única variación fue que habían más agentes _S_ al finalizar la simulación, comparado con otras velocidades.
 
 ![Diferencia de imágenes de diferentes velocidades. Velocidad 1/10](p6_t100.png)
-![Velocidad 1/30](p6_t100.png)
+
+![Diferencia de imágenes de diferentes velocidades. Velocidad 1/30](100veces.png)
 
 También, el tiempo en el que es más probable que haya un agente infectado, es en el rango de 40-60 generaciones a lo largo del tiempo de la simulación.
 

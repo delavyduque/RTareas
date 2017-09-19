@@ -99,7 +99,12 @@ for (tiempo in 1:tmax) {
     }
     graphics.off()
 }
+print(system.time(agentesN))
 stopCluster(cluster)
 png("p6e.png", width=600, height=300)
 plot(1:length(epidemia), 100 * epidemia / n, xlab="Tiempo", ylab="Porcentaje de infectados")
 graphics.off()
+
+#png("timeParallel.png", width=600, height=300)
+#plot(1:length(epidemia), 100 * epidemia / n, xlab="Tiempo", ylab="Avance de proceso")
+#graphics.off()
